@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Page</title>
+</head>
+<body style="text-align:center; margin-top:100px; font-family:Arial;">
+
+  <h2>Hello</h2>
+ 
+   <p style="color:rgb(40, 4, 105);">Enter a 4-Numbers password</p>
+
+  <input type="password" id="password" maxlength="4" placeholder="4 digits only">
+  <br><br>
+
+  <button onclick="checkPassword()">submit</button>
+
+  <p style="color:rgb(205, 33, 33);">hint: maybe a year</p>
+
+  <p id="result"></p>
+
+  <script>
+    function checkPassword() {
+      var pass = document.getElementById("password").value;
+
+      if (pass === "2002") { // غير الرقم هنا
+        document.getElementById("result").innerHTML =
+        "thats right .. watch this please.<br><a href='https://www.netflix.com/watch/80014097?s=i&trkid=278685009&t=2011&d=71&momentUuid=62AFA419-0872-4DBA-B499-32D931FEA1DC' target='_blank'>Watch</a>";
+      } else {
+        document.getElementById("result").innerText = "u know it..";
+      }
+    }
+  </script>
+
+</body>
+</html>
