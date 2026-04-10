@@ -1,35 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Password Page</title>
+<meta charset="UTF-8">
+<title>Hey you</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+
+    /* رمادي + بيج فاتح */
+    background: linear-gradient(-45deg, #d6d6d6, #f5f1e8, #cfcfcf, #f3ead7);
+    background-size: 400% 400%;
+    animation: bg 12s ease infinite;
+  }
+
+  @keyframes bg {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  .box {
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 28px;
+    border-radius: 25px;
+    text-align: center;
+    color: #3a3a3a;
+    width: 320px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    animation: fade 0.8s ease;
+  }
+
+  @keyframes fade {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  input {
+    padding: 10px;
+    width: 80%;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    margin-top: 10px;
+    background: #fffaf3;
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #d6d6d6;
+    color: #3a3a3a;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  #qBox, #yesBox {
+    display: none;
+  }
+
+  #error {
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+</style>
 </head>
-<body style="text-align:center; margin-top:100px; font-family:Arial;">
 
-  <h2 style="color: rgb(89, 0, 255);">Hello</h2>
- 
-  <p style="color:rgb(89, 0, 255);">Enter a 4-Numbers password</p>
+<body>
 
-  <input type="password" id="password" maxlength="4" placeholder="4 digits only">
-  <br><br>
+<!-- LOGIN -->
+<div class="box" id="loginBox">
+  <h2>Hey you !</h2>
+  <p>guess the password</p>
 
-  <button onclick="checkPassword()">submit</button>
+  <input type="password" id="password" placeholder="••••••">
+  <br>
+  <button onclick="checkPassword()">Enter</button>
 
-  <p style="color:rgb(205, 33, 33);">hint: maybe a year</p>
+  <p id="error"></p>
+</div>
 
-  <p id="result"></p>
+<!-- QUESTION -->
+<div class="box" id="qBox">
+  <h2>Wanna text me?</h2>
+  <button onclick="sendAnswer('Yes')">Yes</button>
+  <button onclick="sendAnswer('No')">No</button>
+</div>
 
-  <script>
-    function checkPassword() {
-      var pass = document.getElementById("password").value;
+<!-- YES RESULT -->
+<div class="box" id="yesBox">
+  <h2> insta</h2>
+  <p>@itsokaytofeelme</p>
+</div>
 
-      if (pass === "2002") {
-        document.getElementById("result").innerHTML =
-        "<span style='color: purple;'>thats right .. watch this please.</span><br><a href='https://www.netflix.com/watch/80014097?s=i&trkid=278685009&t=2011&d=71&momentUuid=62AFA419-0872-4DBA-B499-32D931FEA1DC' target='_blank' style='color: purple;'>Watch</a>";
-      } else {
-        document.getElementById("result").innerText = "Nooo!";
-      }
-    }
-  </script>
-<img src="https://webhook.site/f590009f-8513-49bc-86dd-d7655f0df5cb" style="display:none">
+<script>
+
+const webhookURL = "https://webhook.site/d39688ea-63c1-4637-89dc-d6d74668306f";
+const correctPassword = "2002";
+
+function checkPassword() {
+  const pass = document.getElementById("password").value;
+
+  if (pass === correctPassword) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("qBox").style.display = "block";
+  } else {
+    document.getElementById("error").innerHTML = `
+      Noo<br>
+      <span style="font-size:12px;">maybe a year</span>
+    `;
+  }
+}
+
+function sendAnswer(answer) {
+
+  if (answer === "Yes") {
+    fetch(webhookURL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        answer: answer,
+        time: new Date().toISOString()
+      })
+    });
+
+    document.getElementById("qBox").style.display = "none";
+    document.getElementById("yesBox").style.display = "block";
+
+  } else {
+    document.getElementById("qBox").innerHTML = `
+      <h2>Ok.</h2>
+    `;
+  }
+}
+
+</script>
+
 </body>
 </html>
