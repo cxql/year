@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Page</title>
+</head>
+<body style="text-align:center; margin-top:50px; font-family:Arial;">
+
+  <h2>Enter the 4-digit password</h2>
+  
+  <input type="password" id="password" placeholder="4-digit password">
+  <button onclick="checkPassword()">Enter</button>
+
+  <p id="message" style="margin-top:20px; font-size:20px;"></p>
+
+  <script>
+    function checkPassword() {
+      var pass = document.getElementById("password").value;
+      var correctPassword = "2002";
+
+      if (pass === correctPassword) {
+        document.getElementById("message").innerText = "Hello";
+      } else {
+        document.getElementById("message").innerText = "Wrong password!";
+      }
+    }
+  </script>
+
+</body>
+</html>
